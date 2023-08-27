@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Swing 2</title>
+<link rel="stylesheet" type="text/css" href="main.css" />
+<style>
+    body {
+        margin: 20px
+    }
+    html * {
+        font-family: Monaco;
+    }
+    #swingControls label {
+        display: block;
+    }
+</style>
+</head>
+<body>
+    <div id="swingControls">
+        <div>
+            <label for="swing-1">Swing 1 <span id="swing-1-info"></span>:</label>
+            <input id="swing-1" data-swing="1" name="swing-1" type="range" min="0" max="5" step="1.0" value="0" />
+        </div>
+        <div>
+            <label for="swing-2">Swing 2 <span id="swing-2-info"></span>:</label>
+            <input id="swing-2" data-swing="2" name="swing-2" type="range" min="0" max="5" step="1.0" value="0" />
+        </div>
+        <div>
+            <label for="swing-3">Swing 3 <span id="swing-3-info"></span>:</label>
+            <input id="swing-3" data-swing="3" name="swing-3" type="range" min="0" max="5" step="1.0" value="0" />
+        </div>
+        <div>
+            <label for="swing-4">Swing 4 <span id="swing-4-info"></span>:</label>
+            <input id="swing-4" data-swing="4" name="swing-4" type="range" min="0" max="5" step="1.0" value="0" />
+        </div>
+        <div>
+            <label for="swing-5">Swing 5 <span id="swing-5-info"></span>:</label>
+            <input id="swing-5" data-swing="5" name="swing-5" type="range" min="0" max="5" step="1.0" value="0" />
+        </div>
+        <div>
+            <label for="swing-6">Swing 6 <span id="swing-6-info"></span>:</label>
+            <input id="swing-6" data-swing="6" name="swing-6" type="range" min="0" max="5" step="1.0" value="0" />
+        </div>
+    </div>
+    <div id="controls"></div>
+    <script src="config.js"></script>
+    <script src="modules/mqtt.min.js"></script>
+    <script src="modules/mqtt.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
