@@ -110,7 +110,14 @@ let tracks = {
     }   
 }
 
-let gains = {}
+let gains = {
+    1: {},
+    2: {},
+    3: {},
+    4: {},
+    5: {},
+    6: {}
+}
 
 let swingState = {
     1: {
