@@ -18,7 +18,14 @@ let swings = [1, 2, 3, 4, 5, 6]
 
 let tracks = sampler.fly
 
-let gains = {}
+let gains = {
+    1: {},
+    2: {},
+    3: {},
+    4: {},
+    5: {},
+    6: {}
+}
 
 let swingState = {
     1: {
