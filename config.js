@@ -1,4 +1,5 @@
-
-const MQTT_ACTIVE = false
-const MQTT_URL = "ws://10.0.1.2:8083/mqtt"
-const MQTT_TOPIC = "s"
+const MQTT_ACTIVE = true
+const MQTT_URL = "ws://116.202.10.55:8083/mqtt";
+const MQTT_USERNAME = "happyswing";
+const MQTT_PASSWORD = "****";
+const MQTT_TOPIC = "swing.update"
