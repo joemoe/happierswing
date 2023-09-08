@@ -16,15 +16,9 @@
 let swings = [1, 2, 3, 4, 5, 6]
 
 
-let tracks = sampler.fly
+let tracks
 
 let gains = {
-    1: {},
-    2: {},
-    3: {},
-    4: {},
-    5: {},
-    6: {}
 }
 
 let swingState = {
@@ -115,7 +109,22 @@ function playFile(file) {
     return source
 }
 
-function initAudio() {
+function initAudio(kind) {
+    switch(kind) {
+        case 'italo':
+            tracks = sampler.italo
+            break;
+        case 'hiphop':
+            tracks = sampler.hiphop
+            break;
+        case 'disco':
+            tracks = sampler.disco
+            break;
+        case 'fly':
+        default:
+            tracks = sampler.fly
+            break;
+    }
     document.getElementById("audio").remove()
     swingControls.style.display = "block"
     audio = new AudioContext()
@@ -131,4 +140,9 @@ let controls = document.getElementById("controls")
 let swingControls = document.getElementById("swingControls")
 swingControls.style.display = "none"
 
-controls.innerHTML = controls.innerHTML + '<a href="javascript:initAudio()" id="audio">Activate Audio</a>'
+controls.innerHTML = controls.innerHTML + ' <ul id="audio">'
++ '<li><a href="javascript:initAudio(\'fly\')" id="audio">Use Audio (fly)</a></li>'
++ '<li><a href="javascript:initAudio(\'disco\')" id="audio">Use Audio (disco)</a></li>'
++ '<li><a href="javascript:initAudio(\'italo\')" id="audio">Use Audio (italo)</a></li>'
++ '<li><a href="javascript:initAudio(\'hiphop\')" id="audio">Use Audio (hip hop)</a></li>'
++ '</ul>'
