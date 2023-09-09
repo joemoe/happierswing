@@ -1,5 +1,6 @@
 let sampler = {
     fly: {
+        bpm: 90,
         1: {
             name: "rythm",
             samples: [
@@ -92,6 +93,7 @@ let sampler = {
             ]
         }   
     }, disco: {
+        bpm: 118,
         1: {
             name: "drums-top",
             samples: [
@@ -199,6 +201,7 @@ let sampler = {
             ]
         }, 
     }, italo: {
+        bpm: 123,
         1: {
             name: "arp/vocal",
             samples: [
@@ -291,6 +294,7 @@ let sampler = {
             ]
         }, 
     }, hiphop: {
+        bpm: 90,
         1: {
             name: "drums-1",
             samples: [
@@ -392,6 +396,7 @@ let sampler = {
 
 /*
 italo: {
+        bpm: 100,
         1: {
             name: "",
             samples: []

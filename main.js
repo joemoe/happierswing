@@ -16,7 +16,7 @@
 let swings = [1, 2, 3, 4, 5, 6]
 
 
-let tracks
+let tracks, bpm
 
 let gains = {
 }
@@ -125,6 +125,7 @@ function initAudio(kind) {
             tracks = sampler.fly
             break;
     }
+    bpm = tracks.bpm
     document.getElementById("audio").remove()
     swingControls.style.display = "block"
     audio = new AudioContext()
