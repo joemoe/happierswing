@@ -111,6 +111,9 @@ function playFile(file) {
 
 function initAudio(kind) {
     switch(kind) {
+        case 'house':
+            tracks = sampler.house
+            break;
         case 'italo':
             tracks = sampler.italo
             break;
@@ -146,4 +149,5 @@ controls.innerHTML = controls.innerHTML + ' <ul id="audio">'
 + '<li><a href="javascript:initAudio(\'disco\')" id="audio">Use Audio (disco)</a></li>'
 + '<li><a href="javascript:initAudio(\'italo\')" id="audio">Use Audio (italo)</a></li>'
 + '<li><a href="javascript:initAudio(\'hiphop\')" id="audio">Use Audio (hip hop)</a></li>'
++ '<li><a href="javascript:initAudio(\'house\')" id="audio">Use Audio (house)</a></li>'
 + '</ul>'

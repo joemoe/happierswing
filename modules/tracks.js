@@ -391,6 +391,74 @@ let sampler = {
                 }
             ]
         }, 
+    }, house: {
+        bpm: 123,
+        1: {
+            name: "drums",
+            samples: [
+                {
+                    file: 'house/VSH2_Loop_Drum_Full_05_123.wav',
+                    minIntensity: 1,
+                    maxIntensity: 5,
+                    buildUp: true
+                }
+            ]
+        },
+        2: {
+            name: "bass",
+            samples: [
+                {
+                    file: 'house/VSH2_Loop_Bass_Slap_09_123_B_Minor.wav',
+                    minIntensity: 1,
+                    maxIntensity: 5,
+                    buildUp: true
+                } 
+            ]
+        },
+        3: {
+            name: "brass",
+            samples: [
+                {
+                    file: 'house/VSH2_Loop_Brass_01_123_B_Minor.wav',
+                    minIntensity: 1,
+                    maxIntensity: 5,
+                    buildUp: true
+                }
+            ]
+        },
+        4: {
+            name: "guitare",
+            samples: [
+                {
+                    file: 'house/VSH2_Loop_Guitar_Dry_06_123_B_Minor.wav',
+                    minIntensity: 1,
+                    maxIntensity: 5,
+                    buildUp: true
+                }
+            ]
+        },
+        5: {
+            name: "noise",
+            samples: [
+                {
+                    file: 'house/VSH2_Loop_FX_Energy_Noise_04_123.wav',
+                    minIntensity: 1,
+                    maxIntensity: 5,
+                    buildUp: true
+                }
+            ]
+        },
+        6: {
+            name: "vocals",
+            samples: [
+                {
+                    file: 'house/VSH2_Vocal_Female_Kit3_Lead_Chorus_Dry_123_B_Minor.wav',
+                    minIntensity: 1,
+                    maxIntensity: 5,
+                    buildUp: true
+                }
+            ]
+        }, 
     }
 }
 
