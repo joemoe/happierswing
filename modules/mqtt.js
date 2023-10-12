@@ -9,7 +9,6 @@ const options = {
 let mqttClient
 
 function initMQTT() {
-    document.getElementById('mqtt').remove()
     mqttClient = mqtt.connect(MQTT_URL, options);
 
     mqttClient.subscribe(MQTT_TOPIC)

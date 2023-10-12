@@ -114,7 +114,10 @@ function initAudio(kind) {
         initMQTT()
     if(document.getElementById('light').checked)
         initLight()
-    
+
+    document.getElementById('mqtt').parentNode.remove()
+    document.getElementById('light').parentNode.remove()
+
     switch(kind) {
         case 'house':
             tracks = sampler.house

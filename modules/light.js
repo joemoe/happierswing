@@ -42,7 +42,7 @@ function setLightness(el, intensity) {
 }
 
 function initLight() {
-    document.getElementById('light').remove()
+    document.getElementById('light').parentNode.remove()
     lightInterval = window.setInterval(lightBeat, 60 * 1000 / bpm)
     window.setTimeout(_ => {
         lightOffInterval = window.setInterval(lightOffBeat, 60 * 1000 / bpm)
