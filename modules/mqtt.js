@@ -4,18 +4,21 @@ if(MQTT_ACTIVE)
 const options = {
     clean: true,
     connectTimeout: 4000,
-    username: MQTT_USERNAME,
-    password: MQTT_PASSWORD,
+    //username: MQTT_USERNAME,
+    //password: MQTT_PASSWORD,
 };
+
+let mqttClient
 
 function initMQTT() {
     document.getElementById('mqtt').remove()
-    const client = mqtt.connect(MQTT_URL, options);
+    mqttClient = mqtt.connect(MQTT_URL, options);
 
-    client.subscribe(MQTT_TOPIC)
+    mqttClient.subscribe(MQTT_TOPIC)
 
-    client.on("message", function (topic, payload) {
+    mqttClient.on("message", function (topic, payload) {
         let msg = JSON.parse([payload].join(':'))
+        document.getElementById('swing-' + msg.swing).value = msg.intensity
         console.log(msg)
 
         window.dispatchEvent(

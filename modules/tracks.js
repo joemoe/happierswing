@@ -84,11 +84,6 @@ let sampler = {
                     minIntensity: 1,
                     maxIntensity: 5,
                     buildUp: true
-                }, {
-                    file: 'fly/SO_JAM_90_string_stack_eggshell_Ebmaj.wav',
-                    minIntensity: 3,
-                    maxIntensity: 5,
-                    buildUp: true
                 }
             ]
         }   

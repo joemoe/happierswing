@@ -22,6 +22,12 @@ swings.forEach(id => {
 
 function lightBeat() {
     swings.forEach(id => {
+        if(lightPattern[swingState[id].intensity][beat] > 0) {
+            mqttClient.publish(
+                'cmd/led/' + (id - 1) + '/dim_for_time', 
+                '' + Math.round(lightPattern[swingState[id].intensity][beat] * 100) + ',' + 60 / bpm / 2
+            )
+        }
         setLightness(lightElements[id], lightPattern[swingState[id].intensity][beat])
     })
     beat++
