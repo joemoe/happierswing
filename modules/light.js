@@ -1,6 +1,3 @@
-controls.innerHTML = controls.innerHTML + ' <a href="javascript:initLight()" id="light">Use light</a> '
-
-
 
 let lightElements = {}
 let lightInterval

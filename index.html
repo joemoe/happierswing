@@ -13,6 +13,23 @@
     #swingControls label {
         display: block;
     }
+    #audio {
+        display: flex;
+    }
+    #audio li {
+        margin: 5px;
+        padding: 90px 0px;
+        border: 10px solid red;
+        flex-direction: row;
+        width: 200px;
+        text-align: center;
+        background-color: yellow;
+        color: red;
+        font-weight: bold;
+    }
+    #audio li a {
+        color: red;
+    }
 </style>
 </head>
 <body>
@@ -42,7 +59,23 @@
             <input id="swing-6" data-swing="6" name="swing-6" type="range" min="0" max="5" step="1.0" value="0" />
         </div>
     </div>
-    <div id="controls"></div>
+    <div id="controls">
+        <ul id="audio">
+            <li><a href="javascript:initAudio(\'fly\')">"FLY" mode</a></li>
+            <li><a href="javascript:initAudio(\'disco\')">"DISCO" mode</a></li>
+            <li><a href="javascript:initAudio(\'italo\')">"ITALO" mode</a></li>
+            <li><a href="javascript:initAudio(\'hiphop\')">"HIP HOP" mode</a></li>
+            <li><a href="javascript:initAudio(\'house\')">"HOUSE" mode</a></li>
+        </ul>
+        <div>
+            <input type="checkbox" id="mqtt" name="mqtt" checked="checked" />
+            <label for="mqtt">Use MQTT</label>
+        </div>
+        <div>
+            <input type="checkbox" id="light" name="light" />
+            <label for="light">Audio light</label>
+        </div>
+    </div>
     <script src="config.js"></script>
     <script src="modules/mqtt.min.js"></script>
     <script src="modules/mqtt.js"></script>

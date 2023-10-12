@@ -1,0 +1,858 @@
+[
+    {
+        "id": "66ca0569cabd033a",
+        "type": "function",
+        "z": "b0c56b10cc47b8c2",
+        "name": "swings",
+        "func": "const ts = msg.payload;\nconst swings = [\"s1\", \"s2\", \"s3\", \"s4\", \"s5\", \"s6\"];\n\nconst l = 2.5; // length of the swing in meters\nconst g = 9.81; // acceleration due to gravity in m/s^2\n\nlet msgs = [];\n\nfor (const swing of swings) {\n    let msg = {};\n    msg.topic = swing\n    msg.payload = {\n        'acc_x': 0,\n        'acc_y': 0,\n        'acc_z': g,\n        'rot_x': 0,\n        'rot_y': 0,\n        'rot_z': 0,\n        'ts': ts,\n    }\n\n    const start = flow.get(`${swing}_start`) || 0;\n    if (start != 0 && start <= ts) {\n        const theta0 = flow.get(`${swing}_theta0`) * Math.PI / 180 || 0.25 * Math.PI;  // convert to rad, default 45°\n        const t = (ts - start) / 1000; // convert to s\n\n        // calculate the current angle based on the time\n        const theta = theta0 * Math.cos(Math.sqrt(g / l) * t); \n\n        msg.payload['acc_x'] = -g * theta;\n        msg.payload['acc_z'] = g * Math.cos(theta);\n    }\n    msgs.push(msg)\n}\n\nreturn [msgs];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 220,
+        "wires": [
+            [
+                "cb43b397027df976"
+            ]
+        ]
+    },
+    {
+        "id": "a6ec35dd39b0031c",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "d": true,
+        "name": "timer",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 470,
+        "y": 220,
+        "wires": [
+            [
+                "66ca0569cabd033a"
+            ]
+        ]
+    },
+    {
+        "id": "87e42adf556c6089",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "stop all",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 160,
+        "y": 40,
+        "wires": [
+            [
+                "9a2b7cc7451d4c6e"
+            ]
+        ]
+    },
+    {
+        "id": "9a2b7cc7451d4c6e",
+        "type": "function",
+        "z": "b0c56b10cc47b8c2",
+        "name": "set start",
+        "func": "let swings = [\"s1\", \"s2\", \"s3\", \"s4\", \"s5\", \"s6\"];\nlet delay = 0.53; // delay between the start of the swings\n\nconst ts = msg.payload;\n\n// if swing is set in topic, start only one swing\nif (swings.includes(msg.topic)) {\n    swings = [ msg.topic ]\n    delay = 0\n}\nlet offset = 0.0;\nfor (const swing of swings) {\n    if (ts != 0) {\n        offset += delay*1000;\n    }\n    flow.set(`${swing}_start`, msg.payload + offset);\n};\n",
+        "outputs": 0,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "0dde79bfce5a8949",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "start all",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "9a2b7cc7451d4c6e"
+            ]
+        ]
+    },
+    {
+        "id": "f97c15a595e46f87",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "swing1",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "s1",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 160,
+        "wires": [
+            [
+                "9a2b7cc7451d4c6e"
+            ]
+        ]
+    },
+    {
+        "id": "3fd3758d21fb4d6f",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "swing2",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "s2",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "9a2b7cc7451d4c6e"
+            ]
+        ]
+    },
+    {
+        "id": "95df797732209015",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "swing3",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "s3",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "9a2b7cc7451d4c6e"
+            ]
+        ]
+    },
+    {
+        "id": "5e1b78395bdf6d6f",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "swing4",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "s4",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "9a2b7cc7451d4c6e"
+            ]
+        ]
+    },
+    {
+        "id": "6a063751cf78fed7",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "swing5",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "s5",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 320,
+        "wires": [
+            [
+                "9a2b7cc7451d4c6e"
+            ]
+        ]
+    },
+    {
+        "id": "89c47e5e972ac394",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "swing6",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "s6",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 360,
+        "wires": [
+            [
+                "9a2b7cc7451d4c6e"
+            ]
+        ]
+    },
+    {
+        "id": "cb43b397027df976",
+        "type": "mqtt out",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "cfeecb244629f605",
+        "x": 770,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c676819102b7f8bf",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/led/1/dim",
+        "payload": "100",
+        "payloadType": "num",
+        "x": 690,
+        "y": 340,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6"
+            ]
+        ]
+    },
+    {
+        "id": "4351bbe7ebadb6d6",
+        "type": "mqtt out",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d6c0062b2def916e",
+        "x": 950,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "d5d1836d3d751fba",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/led/1/dim",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 680,
+        "y": 420,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6"
+            ]
+        ]
+    },
+    {
+        "id": "1c8c7adaad252f71",
+        "type": "function",
+        "z": "b0c56b10cc47b8c2",
+        "name": "function 1",
+        "func": "const ts = msg.payload;\nconst swings = [\"0\", \"1\"];\n\nconst l = 2.5; // length of the swing in meters\nconst g = 9.81; // acceleration due to gravity in m/s^2\n\nlet msgs = [];\n\nfor (const swing in swings) {\n    let msg = {};\n    msg.topic = \"cmd/led/\" + swing + \"/dim\"\n\n    const duration = 3\n    const lower = 0\n    const high = 100\n    const scal = 2 * Math.PI / duration\n    const t = (ts / 1000 * scal)\n\n    msg.payload = Math.round(((Math.cos(t) + 1) / 2) * (high - lower) + lower)\n\n    msgs.push(msg)\n}\n\nreturn [msgs];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 740,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6",
+                "23a2a69407080abd"
+            ]
+        ]
+    },
+    {
+        "id": "b026bf960a075bf1",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "l1",
+        "payload": "",
+        "payloadType": "date",
+        "x": 580,
+        "y": 740,
+        "wires": [
+            [
+                "1c8c7adaad252f71"
+            ]
+        ]
+    },
+    {
+        "id": "21323ae3d13d641b",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/led/1/dim",
+        "payload": "50",
+        "payloadType": "num",
+        "x": 690,
+        "y": 380,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6"
+            ]
+        ]
+    },
+    {
+        "id": "99fb10ea0c44a236",
+        "type": "mqtt in",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "topic": "error/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 570,
+        "y": 780,
+        "wires": [
+            [
+                "23a2a69407080abd"
+            ]
+        ]
+    },
+    {
+        "id": "23a2a69407080abd",
+        "type": "debug",
+        "z": "b0c56b10cc47b8c2",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "11b8c4342b7f2708",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/led/1/dim",
+        "payload": "not_valid",
+        "payloadType": "num",
+        "x": 710,
+        "y": 460,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6"
+            ]
+        ]
+    },
+    {
+        "id": "cf7e421e13ce53ea",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/led/all/dim",
+        "payload": "100",
+        "payloadType": "num",
+        "x": 670,
+        "y": 620,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6"
+            ]
+        ]
+    },
+    {
+        "id": "5cf780e43e8068ba",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/led/all/dim",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 640,
+        "y": 700,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6"
+            ]
+        ]
+    },
+    {
+        "id": "9bd0a166910fb5c0",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/led/0/dim",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 680,
+        "y": 540,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6"
+            ]
+        ]
+    },
+    {
+        "id": "317fc23c5dfe715b",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/led/0/dim",
+        "payload": "100",
+        "payloadType": "num",
+        "x": 670,
+        "y": 500,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6"
+            ]
+        ]
+    },
+    {
+        "id": "727fd15317accca4",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/led/3/dim",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 660,
+        "y": 580,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6"
+            ]
+        ]
+    },
+    {
+        "id": "9c14a713661e944e",
+        "type": "inject",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "cmd/led/all/dim",
+        "payload": "50",
+        "payloadType": "num",
+        "x": 670,
+        "y": 660,
+        "wires": [
+            [
+                "4351bbe7ebadb6d6"
+            ]
+        ]
+    },
+    {
+        "id": "6b39a67391dc5193",
+        "type": "mqtt in",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "topic": "swing.update",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 460,
+        "wires": [
+            [
+                "826a289277d2c697"
+            ]
+        ]
+    },
+    {
+        "id": "082151a9743fd6d9",
+        "type": "mqtt out",
+        "z": "b0c56b10cc47b8c2",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d6c0062b2def916e",
+        "x": 370,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "826a289277d2c697",
+        "type": "function",
+        "z": "b0c56b10cc47b8c2",
+        "name": "led intensity",
+        "func": "var swing = (msg.payload.swing - 1)\nvar intenstity = msg.payload.intensity * 20\n\nif(this.values[swing] == intenstity) return false\n\nthis.values[swing] = intenstity\n\nreturn {\n    topic: \"cmd/led/\" + swing  + \"/dim\",\n    payload: intenstity\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n\nthis.values = [0, 0, 0, 0, 0, 0]",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 620,
+        "wires": [
+            [
+                "50baf7adb2cc0df0",
+                "082151a9743fd6d9"
+            ]
+        ]
+    },
+    {
+        "id": "50baf7adb2cc0df0",
+        "type": "debug",
+        "z": "b0c56b10cc47b8c2",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "cfeecb244629f605",
+        "type": "mqtt-broker",
+        "name": "mqtt.happyswing.at",
+        "broker": "emqx",
+        "port": "8883",
+        "tls": "c96fe8fe386e0dee",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "d6c0062b2def916e",
+        "type": "mqtt-broker",
+        "name": "Raspberry",
+        "broker": "192.168.1.252",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c96fe8fe386e0dee",
+        "type": "tls-config",
+        "name": "mqtt.happyswing.at",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "cacert.pem",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]

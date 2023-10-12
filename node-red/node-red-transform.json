@@ -1,0 +1,444 @@
+[
+    {
+        "id": "20697f7ec5dd8b34",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "swing.update",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d6c0062b2def916e",
+        "x": 910,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "e4336ba8114e25da",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "remove topic",
+        "func": "return {payload: msg.payload};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 220,
+        "wires": [
+            [
+                "20697f7ec5dd8b34"
+            ]
+        ]
+    },
+    {
+        "id": "1b99e73b1d3d588e",
+        "type": "rbe",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 550,
+        "y": 220,
+        "wires": [
+            [
+                "e4336ba8114e25da"
+            ]
+        ]
+    },
+    {
+        "id": "9f086b2b14f36022",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "accel-transform",
+        "func": "const corrections = [5.2 - 4.81, 4.4 - 0.1, 1.49 - 1.18, 3 - 0.22, 1.85 - 0.66, 1.02];\nconst activeThreshold = 5.5;\nconst maxIntensityThreshold = 14\n\nconst clip = (value, min, max) => Math.max(Math.min(value, max), min);\n\nconst {ts, rms} = msg.payload;\n\nconst swing = parseInt(msg.topic.replaceAll(\"accel/\", \"\"));\nconst minTreshhold = corrections[swing - 1] + 1\nconst active = rms > minTreshhold;\nconst intensity = Math.round(5 * clip((rms - minTreshhold) / (maxIntensityThreshold - minTreshhold), 0, 1))\n\nreturn { topic: swing, payload: { swing, intensity } };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 220,
+        "wires": [
+            [
+                "1b99e73b1d3d588e"
+            ]
+        ]
+    },
+    {
+        "id": "a80d594118bc68e2",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/1",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "9f086b2b14f36022"
+            ]
+        ]
+    },
+    {
+        "id": "26f083c92779ab66",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/2",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 120,
+        "wires": [
+            [
+                "9f086b2b14f36022"
+            ]
+        ]
+    },
+    {
+        "id": "e436b45f9adf3161",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/3",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "9f086b2b14f36022"
+            ]
+        ]
+    },
+    {
+        "id": "24f7252c08e00198",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/4",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "9f086b2b14f36022"
+            ]
+        ]
+    },
+    {
+        "id": "b3f3224a35a9bf04",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/5",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 320,
+        "wires": [
+            [
+                "9f086b2b14f36022"
+            ]
+        ]
+    },
+    {
+        "id": "7e61345cd671dab3",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/6",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 380,
+        "wires": [
+            [
+                "9f086b2b14f36022"
+            ]
+        ]
+    },
+    {
+        "id": "73da2742fddde54b",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "graph",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d6c0062b2def916e",
+        "x": 770,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "d03cc6f41118fb42",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "transform combined msg",
+        "func": "const corrections = [5.2-4.81, 4.4-0.21, 1.49-1.18, 3-0.22, 1.85-0.66, 1.02];\n\nconst payload = {};\n\nfor (var key in msg.payload) {\n    if (msg.payload.hasOwnProperty(key)) {\n        const swing = parseInt(key.replaceAll(\"accel/\", \"\"));\n        payload[swing] = msg.payload[key].rms - corrections[swing - 1];\n    }\n}\n\nreturn { payload: { ts: Date.now(), ...payload}};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 620,
+        "wires": [
+            [
+                "73da2742fddde54b",
+                "5babfc754c86cef5"
+            ]
+        ]
+    },
+    {
+        "id": "159e129172f4c834",
+        "type": "join",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "0.1",
+        "count": "6",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 310,
+        "y": 620,
+        "wires": [
+            [
+                "d03cc6f41118fb42"
+            ]
+        ]
+    },
+    {
+        "id": "5babfc754c86cef5",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c089ee6804b13730",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/1",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 460,
+        "wires": [
+            [
+                "159e129172f4c834"
+            ]
+        ]
+    },
+    {
+        "id": "8fde9e81bbb92660",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/2",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 520,
+        "wires": [
+            [
+                "159e129172f4c834"
+            ]
+        ]
+    },
+    {
+        "id": "94c34231e36cfc0c",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/3",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 580,
+        "wires": [
+            [
+                "159e129172f4c834"
+            ]
+        ]
+    },
+    {
+        "id": "da5a7c54f79ea86f",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/4",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 660,
+        "wires": [
+            [
+                "159e129172f4c834"
+            ]
+        ]
+    },
+    {
+        "id": "78966bf28fe75b4c",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/5",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 720,
+        "wires": [
+            [
+                "159e129172f4c834"
+            ]
+        ]
+    },
+    {
+        "id": "200c3188776c1b28",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "accel/6",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d6c0062b2def916e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 780,
+        "wires": [
+            [
+                "159e129172f4c834"
+            ]
+        ]
+    },
+    {
+        "id": "d6c0062b2def916e",
+        "type": "mqtt-broker",
+        "name": "Raspberry",
+        "broker": "192.168.1.252",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

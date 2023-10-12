@@ -1,5 +1,3 @@
-if(MQTT_ACTIVE)
-    controls.innerHTML = controls.innerHTML + ' <a href="javascript:initMQTT()" id="mqtt">Connect to MQTT</a> '
 
 const options = {
     clean: true,
