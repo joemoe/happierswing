@@ -131,6 +131,9 @@ function initAudio(kind) {
         case 'disco':
             tracks = sampler.disco
             break;
+        case 'polar':
+            tracks = sampler.polar
+            break;
         case 'fly':
         default:
             tracks = sampler.fly

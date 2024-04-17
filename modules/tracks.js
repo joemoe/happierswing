@@ -454,6 +454,146 @@ let sampler = {
                 }
             ]
         }, 
+    }, polar: {
+        bpm: 123,
+        1: {
+            name: "Bass",
+            samples: [
+                {
+                    file: 'polar/Bass_1.mp3',
+                    minIntensity: 1,
+                    maxIntensity: 2,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Bass_2.mp3',
+                    minIntensity: 3,
+                    maxIntensity: 4,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Bass_3.mp3',
+                    minIntensity: 5,
+                    maxIntensity: 5,
+                    buildUp: false
+                }
+            ]
+        }, 
+        2: {
+            name: "Choir",
+            samples: [
+                {
+                    file: 'polar/Choir_1.mp3',
+                    minIntensity: 1,
+                    maxIntensity: 2,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Choir_2.mp3',
+                    minIntensity: 3,
+                    maxIntensity: 4,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Choir_3.mp3',
+                    minIntensity: 5,
+                    maxIntensity: 5,
+                    buildUp: false
+                }
+            ]
+        }, 
+        3: {
+            name: "Drums",
+            samples: [
+                {
+                    file: 'polar/Drums_1.mp3',
+                    minIntensity: 1,
+                    maxIntensity: 2,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Drums_2.mp3',
+                    minIntensity: 3,
+                    maxIntensity: 4,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Drums_3.mp3',
+                    minIntensity: 5,
+                    maxIntensity: 5,
+                    buildUp: false
+                }
+            ]
+        }, 
+        4: {
+            name: "Piano_1",
+            samples: [
+                {
+                    file: 'polar/Piano_1_1.mp3',
+                    minIntensity: 1,
+                    maxIntensity: 2,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Piano_1_2.mp3',
+                    minIntensity: 3,
+                    maxIntensity: 4,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Piano_1_3.mp3',
+                    minIntensity: 5,
+                    maxIntensity: 5,
+                    buildUp: false
+                }
+            ]
+        }, 
+        5: {
+            name: "Piano_2",
+            samples: [
+                {
+                    file: 'polar/Piano_2_1.mp3',
+                    minIntensity: 1,
+                    maxIntensity: 2,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Piano_2_2.mp3',
+                    minIntensity: 3,
+                    maxIntensity: 4,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Piano_2_3.mp3',
+                    minIntensity: 5,
+                    maxIntensity: 5,
+                    buildUp: false
+                }
+            ]
+        }, 
+        6: {
+            name: "Synth",
+            samples: [
+                {
+                    file: 'polar/Synth_1.mp3',
+                    minIntensity: 1,
+                    maxIntensity: 2,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Synth_2.mp3',
+                    minIntensity: 3,
+                    maxIntensity: 4,
+                    buildUp: false
+                }, 
+                {
+                    file: 'polar/Synth_3.mp3',
+                    minIntensity: 5,
+                    maxIntensity: 5,
+                    buildUp: false
+                }
+            ]
+        }
     }
 }
 
